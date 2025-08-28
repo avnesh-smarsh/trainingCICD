@@ -6,7 +6,7 @@ resource_types:
       repository: teliaoss/github-pr-resource
 
 resources:
-- name: spring-boot-hello-world-pr
+- name: trainingCICD
   type: pull-request
   check_every: 30m
   source:
@@ -20,14 +20,14 @@ resources:
 jobs:
 - name: build-spring-boot
   plan:
-  - get: spring-boot-hello-world-pr
+  - get: trainingCICD
     trigger: true
     version: every
     params: { list_changed_files: true }
   - put: update-status
-    resource: spring-boot-hello-world-pr
+    resource: trainingCICD
     params:
-      path: spring-boot-hello-world-pr
+      path: trainingCICD
       status: pending    
   - task: maven-build
     config:
@@ -38,7 +38,7 @@ jobs:
           repository: maven
           tag: "3.8.5-openjdk-17"
       inputs:
-      - name: spring-boot-hello-world-pr
+      - name: trainingCICD
       outputs:
       - name: build-artifacts
       run:
@@ -46,7 +46,7 @@ jobs:
         args:
         - -c
         - |
-          cd spring-boot-hello-world-pr
+          cd trainingCICD
           echo "Starting Maven build..."
           mvn clean install -B -DskipTests=false
           echo "Build completed successfully!"
@@ -60,14 +60,14 @@ jobs:
           ls -la ../build-artifacts/
     on_success:
       do:
-        - put: spring-boot-hello-world-pr
-          inputs: [ spring-boot-hello-world-pr ]
+        - put: trainingCICD
+          inputs: [ trainingCICD ]
           params:
-            path: spring-boot-hello-world-pr
+            path: trainingCICD
             status: success
     on_failure:
       do:
-        - put: spring-boot-hello-world-pr
+        - put: trainingCICD
           params:
-            path: spring-boot-hello-world-pr
+            path: trainingCICD
             status: failure
