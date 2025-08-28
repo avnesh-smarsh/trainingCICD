@@ -12,7 +12,7 @@ public class HelloWorldController {
     }
     @GetMapping("/")
     public String home(){
-        return "Hello, From home!";
+        return "Hello, From home Again";
     }
 
 
