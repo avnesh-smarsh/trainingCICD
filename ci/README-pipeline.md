@@ -20,7 +20,7 @@ This directory contains a Concourse CI/CD pipeline configuration to build the Sp
 
 Edit `params.yml` and update:
 ```yaml
-git-repo-uri: https://github.com/YOUR-USERNAME/spring-boot-hello-world.git
+git-repo-uri: https://github.com/avnesh-smarsh/trainingCICD
 git-branch: main
 ```
 
